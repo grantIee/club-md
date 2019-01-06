@@ -20,9 +20,30 @@
 *React has several different components:*
 
 * **`React.Component`**: has subclasses -> things that extend `react.component`:
-		* Takes the parameters called props
-		* Returns a hierarchy of views to disply via the `render` method
-		* `render` method will return a *description* of what you want to see on the screen.
-		* **React** Takes that *description* and displays that result
-	You can generally use "JSX" to make the structures easier to write.
+	* Takes the parameters called props
+	* Returns a hierarchy of views to disply via the `render` method
+	* `render` method will return a *description* of what you want to see on the screen.
+	* **React** Takes that *description* and displays that result. You can generally use "JSX" to make the structures easier to write.
+
+
+# Rule 1
+Description for rule 1.
+
+<div style="-webkit-column-count: 2; -moz-column-count: 2; column-count: 2; -webkit-column-rule: 1px dotted #e0e0e0; -moz-column-rule: 1px dotted #e0e0e0; column-rule: 1px dotted #e0e0e0;">
+    <div style="display: inline-block;">
+        <h2>Good</h2>
+        <pre><code class="language-c">int foo (void) 
+{
+    int i;
+}
+</code></pre>
+    </div>
+    <div style="display: inline-block;">
+        <h2>Bad</h2>
+        <pre><code class="language-c">int foo (void) {
+    int i;
+}
+</code></pre>
+    </div>
+</div>
 	
