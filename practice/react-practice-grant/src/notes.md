@@ -19,7 +19,7 @@
 
 *React has several different components:*
 
-	* **`React.Component`**: has subclasses -> things that extend `react.componenet`:
+* **`React.Component`**: has subclasses -> things that extend `react.component`:
 		* Takes the parameters called props
 		* Returns a hierarchy of views to disply via the `render` method
 		* `render` method will return a *description* of what you want to see on the screen.
