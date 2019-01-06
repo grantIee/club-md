@@ -26,23 +26,47 @@
 	* **React** Takes that *description* and displays that result. You can generally use "JSX" to make the structures easier to write.
 
 
-# Rule 1
-Description for rule 1.
+# Differences between JSX and JS
+*There comes ease with using JSX over JS*
 
 <div style="-webkit-column-count: 2; -moz-column-count: 2; column-count: 2; -webkit-column-rule: 1px dotted #e0e0e0; -moz-column-rule: 1px dotted #e0e0e0; column-rule: 1px dotted #e0e0e0;">
     <div style="display: inline-block;">
-        <h2>Good</h2>
-        <pre><code class="language-c">int foo (void) 
-{
-    int i;
+        <h2>JS</h2>
+        <pre><code class="javascript">
+class ShoppingList extends React.Component {
+  render() {
+    return (
+      <div className="shopping-list">
+        <h1>Shopping List for {this.props.name}</h1>
+        <ul>
+          <li>Instagram</li>
+          <li>WhatsApp</li>
+          <li>Oculus</li>
+        </ul>
+      </div>
+    );
+  }
 }
+
+// Example usage: <ShoppingList name="Mark" />
 </code></pre>
     </div>
+
     <div style="display: inline-block;">
-        <h2>Bad</h2>
-        <pre><code class="language-c">int foo (void) {
-    int i;
-}
+        <h2>JSX</h2>
+        <pre><code class="javascript">
+React.createElement(
+  "div",
+  { className: "shopping-list" },
+  React.createElement("h1", null, "Shopping List for ", props.name),
+  React.createElement(
+    "ul",
+    null,
+    React.createElement("li", null, "Instagram"),
+    React.createElement("li", null, "WhatsApp"),
+    React.createElement("li", null, "Oculus")
+  )
+);
 </code></pre>
     </div>
 </div>
