@@ -26,13 +26,12 @@
 	* **React** Takes that *description* and displays that result. You can generally use "JSX" to make the structures easier to write.
 
 
-# Differences between JSX and JS
+### Differences between JSX and JS
 *There comes ease with using JSX over JS*
 
-<div style="-webkit-column-count: 2; -moz-column-count: 2; column-count: 2; -webkit-column-rule: 1px dotted #e0e0e0; -moz-column-rule: 1px dotted #e0e0e0; column-rule: 1px dotted #e0e0e0;">
-    <div style="display: inline-block;">
-        <h2>JS</h2>
-        <pre><code class="javascript">
+**JS**
+---
+```javascript
 class ShoppingList extends React.Component {
   render() {
     return (
@@ -49,12 +48,11 @@ class ShoppingList extends React.Component {
 }
 
 // Example usage: <ShoppingList name="Mark" />
-</code></pre>
-    </div>
+```
 
-    <div style="display: inline-block;">
-        <h2>JSX</h2>
-        <pre><code class="javascript">
+**JSX**
+---
+```javascript
 React.createElement(
   "div",
   { className: "shopping-list" },
@@ -67,7 +65,4 @@ React.createElement(
     React.createElement("li", null, "Oculus")
   )
 );
-</code></pre>
-    </div>
-</div>
-	
+```
