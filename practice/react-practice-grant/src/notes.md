@@ -24,10 +24,13 @@
 	* Returns a hierarchy of views to disply via the `render` method
 	* `render` method will return a *description* of what you want to see on the screen.
 	* **React** Takes that *description* and displays that result. You can generally use "JSX" to make the structures easier to write.
+	* JSX is something similar to JS, but is more structured and makes it seem like it is more of a template language than JS
+
 
 
 ### Differences between JSX and JS
 *There comes ease with using JSX over JS*
+	
 
 **JS**
 ---
@@ -66,3 +69,33 @@ React.createElement(
   )
 );
 ```
+
+### Understanding how Props work in React
+
+**Original Code**
+*Board Class*
+---
+```javascript
+class Board extends React.Component {
+  renderSquare(i) {
+    return <Square />;
+  }
+```
+
+```javascript
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square">
+        {/* TODO */}
+      </button>
+    );
+  }
+}
+```
+
+We get an image that then looks something like this:
+![a
+
+**New Code**
+
