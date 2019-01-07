@@ -73,8 +73,8 @@ React.createElement(
 ### Understanding how Props work in React
 
 **Original Code**
-*Board Class*
 ---
+*Board Class*
 ```javascript
 class Board extends React.Component {
   renderSquare(i) {
@@ -82,6 +82,7 @@ class Board extends React.Component {
   }
 ```
 
+*Square Class*
 ```javascript
 class Square extends React.Component {
   render() {
@@ -95,7 +96,80 @@ class Square extends React.Component {
 ```
 
 We get an image that then looks something like this:
-![a
+![resulting image from previous code](https://reactjs.org/static/tictac-empty-1566a4f8490d6b4b1ed36cd2c11fe4b6-a9336.png)
 
 **New Code**
+---
+*Board Class*
+```javascript
+class Board extends React.Component {
+  renderSquare(i) {
+    return <Square value={i} />;
+  }
+```
 
+*Square Class*
+```javascript
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square">
+        {this.props.value}
+      </button>
+    );
+  }
+}
+```
+
+We then get an image that looks like this:
+![resulting image from updated code](https://reactjs.org/static/tictac-numbers-685df774da6da48f451356f33f4be8b2-be875.png)
+
+---
+
+From this example, you can see how 'props' are passed down from parents to children
+
+### Arrow Syntax
+**Without Arrow**
+---
+*Square Class*
+```javascript
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square" onClick={function() { alert('click'); }}>
+        {this.props.value}
+      </button>
+    );
+  }
+}
+```
+**With Arrow**
+---
+```javascript
+class Square extends React.Component {
+ render() {
+   return (
+     <button className="square" onClick={() => alert('click')}>
+       {this.props.value}
+     </button>
+   );
+ }
+}
+```
+---
+
+In this case there is a difference in the following lines:
+`<button className="square" onClick={() => alert('click')}>`
+
+and 
+
+`<button className="square" onClick={function() { alert('click'); }}>`
+
+This is because, the prop for `onClick` is being passed as a function.
+
+
+
+
+
+
+###
