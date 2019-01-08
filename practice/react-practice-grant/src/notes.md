@@ -159,6 +159,7 @@ class Square extends React.Component {
 ---
 
 In this case there is a difference in the following lines:
+
 `<button className="square" onClick={() => alert('click')}>`
 
 and 
@@ -167,8 +168,64 @@ and
 
 This is because, the prop for `onClick` is being passed as a function.
 
+---
+
+### What is **State**?
+
+- State is a way for a componenet to remember that it was clicked.
+- `this.state` - is generally used as the property of the componenet
+- You can initialize the stage by using a `constructor`
+
+### What does a **Constructor** look like? 
+
+```javascript
+  constructor(props) {
+    super(props); // you always need this for any subclass 
+    // hence every componenet in react needs a super(props)
+    this.state = {
+      value: null,
+    };
+  }
+```     
+- You can initialize the state of a given component.
+- To change the state of the component: `this.setState({value: 'XXX'})}`
+- To get the state of the componenet: `this.state.value`
+*When you call `setState` in a component, React automatically updates the child componenets inside of it too*
+
+### Managing multiple components at Once
+
+- If you want to** get information** from two components or have two components **communicate** with each other you need to **lift the state** from the child components to the parent component
+- Hence, the parent component in our case is the Board component
+
+**Board Code**
+```javascript
+<Square
+	value={this.state.squares[i]}
+	onClick={() => this.handleClick(i)}
+/>
+```
+
+**Square Code**
+```javascript
+<button
+	className="square"
+	onClick={() => this.props.onClick()}
+>
+```
+
+**Order of events**
+1. The `onClick` prop on the buil-in DOM `<button>` component tells React to set up a click event listener.
+2. When the button is clicked, React will call the `onClick` handler that is defined in Square's `render()` method.
+3. This event handler calls `this.props.onClick()`. The Square's `onClick` prop was specified by the board.
+4. Since the Board passed `onClick={() => this.handleClick(i)}` to Square, the Square calls `this.handleClick(i)` when clicked
+5. We have not defined the `handleClick()` so the code crashes
+
+**React Conventions**
+- `on[Event]` is generally used for props that **represent** events
+- `handle[Event]` is generally used for methods which **handles** the events
 
 
+**New Code**
 
 
 
