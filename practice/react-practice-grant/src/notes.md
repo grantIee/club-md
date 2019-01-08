@@ -314,7 +314,7 @@ const doubled = numbers.map(x => x * 2); // [2,3,6]
 
 With the code above you can do the following: 
 - Map history of moves to React elements representing buttons on the screen and display a list of buttons to "jump" to past moves
-- With new code in commit:
+- With new code in commit: 8b2c9ed56370110b0051de3adea63dc5e1388a36 
 - You result with a warning:
   - *Warning: Each child in an array or iterator should have a unique "key" prop. Check the render method of "Game".*
 
@@ -345,6 +345,26 @@ Hence it would look something like this:
 ```javascript
 <li key = {user.id}>{user.name}: {user.taskCount} tasks left</li>
 ```
+
+- **With keys:**
+  - React takes each list item's key and searches the previous list's items for a matching key
+  - If the current list has a key that didn't exist before, React creates a component
+  - If the current list is missing a key that existed in the previous list, React destroys the previous component.
+  - If the two keys match, the corresponding component is moved.
+  - Keys tell React about the identity of each component which allows React to maintain state between re-renders
+
+### More about Keys
+
+- `key` is a special and reserved property in React
+- When an element is created: React extracts the `key` property and stores the key directly on  the returned element
+
+***STRONGLY RECOMMENDED THAT YOU ASSIGN PROPER KEYS WHENEVER YOU BUILD DYNAMIC LISTS.***
+
+*If no key is specified, React will present a warning and use the array index as a key by default: this is problematic because when trying to re-order a list's items or inserting/removing list items*
+
+Keys don't need to be globally unique, they only need to be unique between components and their siblings.
+
+
 
 
 ###
