@@ -289,7 +289,62 @@ With a **Function Component**, there is no longer the need to use something that
 We need to some how make a state that allows for the state of the game to realize who's turn it is.
 Hence, we add a similar 
 
+## Adding Time Travel
 
+Store the state of the `squares` array in another array called `history`
+We have to decide which component  will contain this array called `history`
+
+### Lifting State Up, Again
+*Considering the fact that the squares array is contained in the `board` class, the `history` should be contained in a hierarchially higher object*
+
+- No longer need to keep the `squares` state in the Board Component. 
+- Need to refractor the code so that the upper hierarchy absorbs all the exisitng classes in the bottom component.
+
+
+### Showing the Past Moves
+
+*React elements are first-class JS objects; we can pass them around in our applications*
+
+Need to use a format like the following:
+
+```javascript
+const numbers = [1,2,3];
+const doubled = numbers.map(x => x * 2); // [2,3,6]
+```
+
+With the code above you can do the following: 
+- Map history of moves to React elements representing buttons on the screen and display a list of buttons to "jump" to past moves
+- With new code in commit:
+- You result with a warning:
+  - *Warning: Each child in an array or iterator should have a unique "key" prop. Check the render method of "Game".*
+
+
+**What does this warning mean?**
+- When you update a list, React needs to determine what has changed. 
+
+Transition from:
+```javascript
+<li>Alexa: 7 tasks left</li>
+<li>Ben: 5 tasks left</li>
+```
+
+to 
+
+```javascript
+<li>Ben: 9 tasks left</li>
+<li>Claudia: 8 tasks left</li>
+<li>Alexa: 5 tasks left</li>
+```
+*Looks like we simply inserted Claudia in between Ben and Alexa*
+
+React doesn't know what we wanted. Hence, you need to give each a specific key.
+
+One option to fix this is to use strings `alexa`, `ben`, `claudia`
+
+Hence it would look something like this:
+```javascript
+<li key = {user.id}>{user.name}: {user.taskCount} tasks left</li>
+```
 
 
 ###
