@@ -226,6 +226,69 @@ This is because, the prop for `onClick` is being passed as a function.
 
 
 **New Code**
+In the new code: d18b9086e1ccb004174b4a8872095a2e5e94df4d
+Compared to the code before it:
+
+*Now the state is stored in the Board component instead of the individual Square components. When the Board's state changes, the Square components re-render automatically. Keeping the state of all squares in the Board components will allow it to determine the winner in the future.*
+
+Square components no longer maintain their state -> the square components recieve values from the Board component and inform the Board that they've been clicked
+
+Such a component that don't have its own state and reports to another component are called: **controlled components**
+
+### Why the code uses `.slice()` everytime:
+
+Two approaches to changing data:
+- **Mutate**: directly change the values
+- **Replace**: replace the data with a new copy of the data
+
+Examples:
+
+**Data Change with Mutation**:
+---
+```javascript
+var player = {score: 1, name: 'Jeff'};
+player.score = 2;
+// Now player is {score: 2, name: 'Jeff'}
+```
+
+**Data Change without Mutation**:
+```javascript
+var player = {score: 1, name: 'Jeff'};
+
+var newPlayer = Object.assign({}, player, {score:2});
+// Now player is unchanged, but newPlayer is {score: 2, name: 'Jeff'}
+```
+
+**Benefits of Immutability**: 
+- We are able to save specific states of the game and go through history.
+- Helps you detect changes
+- When to re-render in React -> helps you with creating *pure components*
+
+---
+
+## Function Components
+
+- Change thee square to be a **Function Component**
+- Simpler way to write omponents that only contain a `render` without a state
+- Does not extend `React.Component`, instead writes a function that takes `props`
+
+Hence, the new square code should look something like this:
+```javascript
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+}
+```
+With a **Function Component**, there is no longer the need to use something that includes the `=>` or some other code that seems weird. 
+
+### Taking Turns
+
+We need to some how make a state that allows for the state of the game to realize who's turn it is.
+Hence, we add a similar 
+
 
 
 
