@@ -99,78 +99,77 @@ def get_table_bids(table_id):
     return ({'success': False, 'error': 'club not found'}), 404
 
 
-@app.route('/api/post/<int:post_id>/comment/', methods = ['POST'])
-def create_comment(post_id):
+
+
+@app.route('/api/club/<int:club_id>/table/<int:table_id>/make_bid', methods = ['POST'])
+def create_bid(table_id):
     '''
-    file: ./documentation/create_comment.yml
+    file: ./documentation/create_bid.yml
     '''
 
-    post = Post.query.filter_by(id = post_id).first()
-    if post is not None:
+    bid = Table.query.filter_by(id = table_id).first()
+    if bid is not None:
         request_body = json.loads(request.data)
         # Code here checks for blank body requests / @beforerequests checks for None body requests
         if not request_body.get('text') == '' and not request_body.get('username') == '':
-            comment = Comment(
-                text = request_body.get('text'),
-                username = request_body.get('username'),
-                post_id = post_id
+            bid = Bid(
+                bid_amount = request_body.get('bid_amount'),
+                table_id = request_body.get('table_id'),
+                user_id = request_body.get('user_id'),
+                club_id = club_id
             )
-            post.comments.append(comment)
-            db.session.add(comment)
+            club.tables.append(bid)
+            db.session.add(bid)
             db.session.commit()
-            return json.dumps({'success': True, 'data': comment.serialize()}), 201
+            return json.dumps({'success': True, 'data': bid.serialize()}), 201
         return json.dumps({'success': False, 'error': 'invalid body format'}), 412
-    return json.dumps({'success': False, 'error': 'Post not found!'}), 404
+    return json.dumps({'success': False, 'error': 'Table not found!'}), 404
 
-@app.route('/api/post/<int:post_id>/vote/', methods = ['POST'])
-def vote_on_post(post_id):
+@app.route('/api/club/<int:club_id>/table<int:table_id>/delete_bid/', methods = ['DELETE'])
+def delete_bid(table_id):
     '''
-    file: ./documentation/vote_on_post.yml
+    file: ./documentation/delete_bid.yml
     '''
 
-    post = Post.query.filter_by(id = post_id).first()
-    if post is not None:
-        request_body = json.loads(request.data)
-        # Code here checks for blank body requests / @beforerequests checks for None body requests
-        if not request_body.get('vote') is None:
-            # Add 1 if true / Minus 1 if false
-            post.score += request_body.get('vote') * 2 - 1
-            db.session.commit()
-            return json.dumps({'success': True, 'data': post.serialize()}), 200
-        # Magic Number 1 -> default value when body is null
-        post.score += 1
+    bid_amount = Table.query.filter_by(id = post_id).first()
+    if bid is not None:
+        db.session.delete(bid)
         db.session.commit()
-        return json.dumps({'success': True, 'data': post.serialize()}), 200
-    return json.dumps({'success': False, 'error': 'Post not found!'}), 404
+        return json.dumps({'success': True, 'data': delete.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'Table not found!'}), 404
 
-@app.route('/api/comment/<int:comment_id>/vote/', methods = ['POST'])
-def vote_on_comment(comment_id):
+
+@app.route('/api/user/<int: user_id>/')
+def get_user_info(user_id):
     '''
-    file: ./documentation/vote_on_comment.yml
+    file: ./documentation/get_user_info.yml
     '''
 
-    comment = Comment.query.filter_by(id = comment_id).first()
-    if comment is not None:
-        request_body = json.loads(request.data)
-        # Code here checks for blank body requests / @beforerequests checks for None body requests
-        if not request_body.get('vote') is None:
-            # Add 1 if true / Minus 1 if false
-            comment.score += request_body.get('vote') * 2 - 1
-            db.session.commit()
-            return json.dumps({'success': True, 'data': comment.serialize()}), 200
-        # Magic Number 1 -> default value when body is null
-        post.score += 1
-        db.session.commit()
-        return json.dumps({'success': True, 'data': comment.serialize()}), 200
-    return json.dumps({'success': False, 'error': 'Post not found!'}), 404
-# Code that checks for post requests that submit a None body
+    user = User.query.filter_by(id = user_id).first()
+    if user is not None:
+        return json.dumps({'success': True, 'data': user.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
+@app.route('/api/user/<int:user_id>/bids/')
+def get_user_bids(user_id):
+    '''
+    file: ./documentation/get_comments.yml
+    '''
+
+    user = User.query.filter_by(id = user_id).first()
+    if user is not None:
+        bids = [bid.serialize() for bid in user.bids]
+        if len(bids) != 0:
+            return json.dumps({'success': True, 'data': bids}), 200
+        return json.dumps({'success': True, 'data': 'There are no bids for this user.'}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
 
 @app.before_request
 def before_request():
     if request.method == 'POST':
         if request.data is None:
             return json.dumps({'success': False, 'error': 'invalid body format'}), 412
-
 
 if __name__ == "__main__":
     app.run(debug=True,port=PORT)
