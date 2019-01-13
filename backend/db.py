@@ -10,7 +10,6 @@ class Table(db.Model):
     club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable = False)
     bids = db.relationship('Bid', cascade = 'delete')
 
-
     def __init__(self, **kwargs):
         self.name = kwargs.get('name', '')
         self.description = kwargs.get('description', '')

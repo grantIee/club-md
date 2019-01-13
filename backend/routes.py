@@ -115,33 +115,36 @@ def get_comments(post_id):
         return json.dumps({'success': True, 'data': 'There are no comments for this post.'}), 200
     return json.dumps({'success': False, 'error': 'Post not found!'}), 404
 
-@app.route('/api/post/<int:post_id>/comment/', methods = ['POST'])
-def create_comment(post_id):
+
+
+@app.route('/api/club/<int:club_id>/table/<int:table_id>/make_bid', methods = ['POST'])
+def create_bid(table_id):
     '''
-    file: ./documentation/create_comment.yml
+    file: ./documentation/create_bid.yml
     '''
 
-    post = Post.query.filter_by(id = post_id).first()
-    if post is not None:
+    bid = Table.query.filter_by(id = table_id).first()
+    if bid is not None:
         request_body = json.loads(request.data)
         # Code here checks for blank body requests / @beforerequests checks for None body requests
         if not request_body.get('text') == '' and not request_body.get('username') == '':
-            comment = Comment(
-                text = request_body.get('text'),
-                username = request_body.get('username'),
-                post_id = post_id
+            bid = Bid(
+                bid_amount = request_body.get('bid_amount'),
+                table_id = request_body.get('table_id'),
+                user_id = request_body.get('user_id'),
+                club_id = club_id
             )
-            post.comments.append(comment)
-            db.session.add(comment)
+            club.tables.append(bid)
+            db.session.add(bid)
             db.session.commit()
-            return json.dumps({'success': True, 'data': comment.serialize()}), 201
+            return json.dumps({'success': True, 'data': bid.serialize()}), 201
         return json.dumps({'success': False, 'error': 'invalid body format'}), 412
-    return json.dumps({'success': False, 'error': 'Post not found!'}), 404
+    return json.dumps({'success': False, 'error': 'Table not found!'}), 404
 
-@app.route('/api/post/<int:post_id>/vote/', methods = ['POST'])
-def vote_on_post(post_id):
+@app.route('/api/club/<int:club_id>/table<int:table_id>/delete_bid/', methods = ['DELETE'])
+def delete_bid(table_id):
     '''
-    file: ./documentation/vote_on_post.yml
+    file: ./documentation/delete_bid.yml
     '''
 
     post = Post.query.filter_by(id = post_id).first()
